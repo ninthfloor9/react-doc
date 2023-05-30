@@ -172,21 +172,79 @@ const MyApp2 = () => {
 // parents component
 
 const FilterableProductTable = () => {
+    return (
+        <div>
+          <SearchBar />
+          <ProductTable products={products} />
+        </div>
+      );
 
 }
 
 const SearchBar = () => {
-    
+    return (
+        <form>
+          <input type="text" placeholder="Search..." />
+          <label>
+            <input type="checkbox" />
+            {' '}
+            Only show products in stock
+          </label>
+        </form>
+      );
 }
 
 const ProductTable = () => {
+    const rows = [];
+    let lastCategory = null;
 
+  products.forEach((data) => {
+    if (data.category !== lastCategory) {
+      rows.push(
+        <ProductCategoryRow
+          category={data.category}
+          key={data.category} />
+      );
+    }
+    rows.push(
+      <ProductRow
+        product={data}
+        key={data.name} />
+    );
+    lastCategory = data.category;
+  });
+
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>{rows}</tbody>
+    </table>
+  );
 }
 
 const ProductCategoryRow = () => {
+    return (
+        <tr>
+            <th colSpan={2}></th>
+        </tr>
+    );
 
 }
 
 const ProductRow = () => {
+    const name = data.stocked ? data.name :
+    <span style={{color:'red'}}></span>
+
+    return (
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+    );
 
 }
