@@ -5,8 +5,9 @@ function App() {
             <ShoppingList />
             <MyButton />
             <MyButton2 />
+            <MyApp />
         </>
-    )
+    );
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -26,10 +27,12 @@ const user = {
 // 중괄호로 escapte 한다.
 const DisplayingData = () => {
     return (
-        <>
+        <>  
+            <h1
+                style={{color: "#1d5f7a"}}>Quick-Start</h1>
             <hr />
-            <h1>Displaying Data</h1>
-            <h1>{user.name}</h1>
+            <h2>Displaying Data</h2>
+            <h3>{user.name}</h3>
             <img
             className="avatar"
             src={user.imageUrl}
@@ -64,7 +67,7 @@ const ShoppingList = () => {
         </li>);
     return (
         <>
-            <h1>Rendering lists</h1>
+            <h2>Rendering lists</h2>
             <ul>{listItems}</ul>
             <hr />
         </>
@@ -81,7 +84,7 @@ const MyButton = () => {
 
     return (
         <>
-            <h1>Responding Events</h1>
+            <h2>Responding Events</h2>
             <button onClick={handleClick}>
                 Click me!
             </button>
@@ -101,12 +104,42 @@ const MyButton2 = () => {
     }
     return (
         <>
-            <h1>Updating the screen</h1>
+            <h2>Updating the screen</h2>
             <button onClick={handleClick}>
                 {count} 번 클릭하셨습니다.
             </button>
             <hr />
         </>
+    )
+}
+
+{/* Sharing data between components */}
+
+const MyApp = () => {
+    // state 만들기
+    const [count2, setCount2] = React.useState(0);
+
+    const handelClick2 = () => {
+        setCount2(count2 + 1);
+    }
+
+    return (
+        <>
+            <h2>Sharing data between components</h2>
+            {/* count2, onClick props 를 밥상에(?) 올려두기 */}
+            <MyButton3 count={count2} onClick={handelClick2} />
+            <MyButton3 count={count2} onClick={handelClick2} />
+            <hr />
+        </>
+    );
+}
+
+{/* props 떠먹기 */}
+const MyButton3 = ({count, onClick}) => {
+    return (
+       <button onClick={onClick}>
+        {count} 번 클릭하셨습니다.
+       </button>
     )
 }
 

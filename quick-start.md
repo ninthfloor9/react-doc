@@ -265,7 +265,7 @@ Hooks는 다른 함수보다 제약이 있습니다. Hooks는 컴포넌트의 �
 
 이전 예제에서 각 MyButton은 독립적인 count를 가지고 있었고, 각 버튼을 클릭할 때마다 해당 버튼의 count만 변경되었습니다.
 
-![State](./notebook/assets/state1.PNG)
+![State](./notebook/assets/quick-start1.PNG)
 
 그러나 종종 컴포넌트들이 데이터를 공유하고 항상 함께 업데이트해야 할 필요가 있습니다.
 
@@ -273,4 +273,67 @@ Hooks는 다른 함수보다 제약이 있습니다. Hooks는 컴포넌트의 �
 
 이 예제에서는 MyApp 컴포넌트가 그 역할을 합니다.
 
-![State](./notebook/assets/state2.PNG)
+![State](./notebook/assets/quick-start2.PNG)
+
+이제 버튼 중 하나를 클릭하면 MyApp의 count가 변경되어 MyButton의 count도 함께 변경됩니다. 이를 코드로 표현하는 방법을 알려드리겠습니다.
+
+먼저, MyButton에서 상태를 MyApp으로 옮겨주세요.
+
+```
+export default function MyApp() {
+  const [count, setCount] = useState(0);
+  
+  function handleClick() {
+    setCount(count+1);
+  }
+
+  return (
+    <div>
+      <h1>Counters that update separately</h1>
+      <MyButton />
+      <MyButton />
+    </div>
+  );
+}
+
+function MyButton() {
+  return (
+    <button onClick={handleClick}>
+    {count} 번 클릭하셨습니다.
+    </button>
+  );
+}
+```
+그런 다음, MyApp에서 상태를 각 MyButton으로 전달하고 공유된 클릭 핸들러와 함께 전달하세요. JSX 중괄호를 사용하여 MyButton에 정보를 전달할 수 있습니다. 이전에 `<img>`와 같은 내장 태그에서 했던 것과 마찬가지입니다.
+
+```
+export default function MyApp() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    setCount(count + 1);
+  }
+
+  return (
+    <div>
+      <h1>Counters that update separately</h1>
+      <MyButton count={count} onClick={handleClick} />
+      <MyButton count={count} onClick={handleClick} />
+    </div>
+  );
+}
+```
+이와 같이 전달하는 정보는 props라고 합니다. 이제 MyApp 컴포넌트에는 count 상태와 handleClick 이벤트 핸들러가 포함되어 있으며, 각 버튼에 대해 이를 props로 전달합니다.
+
+마지막으로, MyButton을 수정하여 상위 컴포넌트에서 전달한 props를 읽도록 변경하세요.
+
+```
+function MyButton({count, onClick}) {
+  return (
+    <button onClick={onClick}>
+    {count} 번 클릭하셨습니다.
+    </button>
+  );
+}
+```
+버튼을 클릭하면 onClick 핸들러가 실행됩니다. 각 버튼의 onClick prop은 MyApp 내부의 handleClick 함수로 설정되어 있으므로 해당 함수 내의 코드가 실행됩니다. 그 코드는 setCount(count + 1)을 호출하여 count 상태 변수를 증가시킵니다. 새로운 count 값은 각 버튼에 prop으로 전달되어 모든 버튼이 새로운 값을 표시합니다. 이를 "상태를 위로 올리기(lifting state up)"라고 합니다. 상태를 위로 올림으로써 컴포넌트 간에 상태를 공유할 수 있게 되었습니다.
