@@ -70,7 +70,8 @@ JSON이 잘 구조화되어 있다면, UI의 컴포넌트 구조와 자연스럽
 <details>
 <summary> app.jsx 예시보기 </summary>
 
-```function ProductCategoryRow({ category }) {
+```
+function ProductCategoryRow({ category }) {
   return (
     <tr>
       <th colSpan="2">

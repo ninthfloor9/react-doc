@@ -6,6 +6,7 @@ function App() {
             <MyButton />
             <MyButton2 />
             <MyApp />
+            <MyApp2 />
         </>
     );
 }
@@ -145,3 +146,47 @@ const MyButton3 = ({count, onClick}) => {
 
 
 
+{/* Thinking in React */}
+
+const data = [
+  { category: "Fruits", price: "$1", stocked: true, name: "Apple" },
+  { category: "Fruits", price: "$1", stocked: true, name: "Dragonfruit" },
+  { category: "Fruits", price: "$2", stocked: false, name: "Passionfruit" },
+  { category: "Vegetables", price: "$2", stocked: true, name: "Spinach" },
+  { category: "Vegetables", price: "$4", stocked: false, name: "Pumpkin" },
+  { category: "Vegetables", price: "$1", stocked: true, name: "Peas" }
+]
+
+// 최상위 parents 가 props를 올려둔다. (다른 자식이 가져갈 수 있게)
+const MyApp2 = () => {
+    return (
+        <>
+            <h2>Thinking in REact</h2>
+            <FilterableProductTable data={data} />
+            <hr />
+
+        </>
+    );
+}
+
+// parents component
+
+const FilterableProductTable = () => {
+
+}
+
+const SearchBar = () => {
+    
+}
+
+const ProductTable = () => {
+
+}
+
+const ProductCategoryRow = () => {
+
+}
+
+const ProductRow = () => {
+
+}
